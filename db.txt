@@ -1,0 +1,141 @@
+CREATE DATABASE language_center;
+CREATE TABLE language(
+lang_id INT PRIMARY KEY AUTO_INCREMENT,
+lang_name VARCHAR(30),
+description VARCHAR(1000)
+);
+CREATE TABLE course(
+course_id INT PRIMARY KEY AUTO_INCREMENT,
+course_name VARCHAR(30),
+language_id INT,
+capacity INT,
+FOREIGN KEY (language_id) REFERENCES language (lang_id) ON DELETE CASCADE
+);
+CREATE TABLE teacher(
+teacher_id INT PRIMARY KEY AUTO_INCREMENT,
+teacher_name VARCHAR(30),
+language_id INT,
+course_id INT,
+level VARCHAR(20),
+phone BIGINT,
+FOREIGN KEY (language_id) REFERENCES language (lang_id) ON DELETE CASCADE,
+FOREIGN KEY (course_id) REFERENCES course (course_id) ON DELETE CASCADE
+);
+CREATE TABLE student(
+stu_id INT PRIMARY KEY AUTO_INCREMENT,
+stu_name VARCHAR(30),
+language_id INT,
+course_id INT,
+teacher_id INT,
+level VARCHAR(20),
+phone BIGINT,
+FOREIGN KEY (language_id) REFERENCES language (lang_id) ON DELETE CASCADE,
+FOREIGN KEY (course_id) REFERENCES course (course_id) ON DELETE CASCADE,
+FOREIGN KEY (teacher_id) REFERENCES teacher (teacher_id) ON DELETE CASCADE
+);
+CREATE TABLE class(
+class_id INT PRIMARY KEY AUTO_INCREMENT,
+class_name VARCHAR(30),
+course_id INT,
+type VARCHAR(200),
+FOREIGN KEY (course_id) REFERENCES course (course_id) ON DELETE CASCADE
+);
+CREATE TABLE exam(
+exam_id INT PRIMARY KEY AUTO_INCREMENT,
+exam_name VARCHAR(30),
+course_id INT,
+exam_date DATE,
+FOREIGN KEY (course_id) REFERENCES course (course_id) ON DELETE CASCADE
+);
+CREATE TABLE level_exam(
+levelexam_id INT PRIMARY KEY,
+levelexam_name VARCHAR(30),
+language_id INT,
+FOREIGN KEY (language_id) REFERENCES language (lang_id) ON DELETE CASCADE
+);
+INSERT INTO language (lang_name,lang_id,description) VALUES('German',1,'German is a diffcult language');
+INSERT INTO language (lang_name,lang_id,description) VALUES('English',2,'English is a easy language');
+INSERT INTO language (lang_name,lang_id,description) VALUES('Turkish',3,'Turkish is a funny language');
+INSERT INTO language (lang_name,lang_id,description) VALUES('French',4,'French is a diffcult language');
+INSERT INTO language (lang_name,lang_id,description) VALUES('Italian',5,' Italian is a romantic language');
+INSERT INTO course (course_name,course_id,language_id,teacher_id,capacity) VALUES('German-A1',1011,1,46,40);
+INSERT INTO course (course_name,course_id,language_id,teacher_id,capacity) VALUES('German-A2',1012,1,45,40);
+INSERT INTO course (course_name,course_id,language_id,teacher_id,capacity) VALUES('English-B2',2022,2,50,40);
+INSERT INTO course (course_name,course_id,language_id,teacher_id,capacity) VALUES('Italian-c1',5031,5,44,20);
+INSERT INTO course (course_name,course_id,language_id,teacher_id,capacity) VALUES('German-b1',1021,1,43 ,40);
+INSERT INTO course (course_name,course_id,language_id,teacher_id,capacity) VALUES('German-b2',1022,1,42, 40);
+INSERT INTO course (course_name,course_id,language_id,teacher_id,capacity) VALUES('German-c1',1031,1,43,40);
+INSERT INTO course (course_name,course_id,language_id,teacher_id,capacity) VALUES('German-c2',1032,1,48,30);
+INSERT INTO course (course_name,course_id,language_id,teacher_id,capacity) VALUES('English-b1',2021,1,50,40);
+INSERT INTO course (course_name,course_id,language_id,teacher_id,capacity) VALUES('English-a1',2011,2,50,40);
+INSERT INTO course (course_name,course_id,language_id,teacher_id,capacity) VALUES('English-a2',2012,2,49,40);
+INSERT INTO course (course_name,course_id,language_id,teacher_id,capacity) VALUES('English-c1',2031,2,49,40);
+INSERT INTO course (course_name,course_id,language_id,teacher_id,capacity) VALUES('English-c2',2032,2,50,30);
+INSERT INTO course (course_name,course_id,language_id,teacher_id,capacity) VALUES('turkish-a1',3011,3,41,50);
+INSERT INTO course (course_name,course_id,language_id,teacher_id,capacity) VALUES('turkish-a2',3012,3,41,40);
+INSERT INTO course (course_name,course_id,language_id,teacher_id,capacity) VALUES('turkish-b1',3021,3,41,40);
+INSERT INTO course (course_name,course_id,language_id,teacher_id,capacity) VALUES('French-a1',4011,4,47,20);
+INSERT INTO course (course_name,course_id,language_id,teacher_id,capacity) VALUES('French-a2',4012,4,47, 15);
+INSERT INTO teacher (teacher_name,teacher-id,language_id,course_id,level,phone) VALUES('amirali alizade',41,1,1031,'c1',09330000476);
+INSERT INTO teacher (teacher_name,teacher-id,language_id,course_id,level,phone) VALUES('fatemeh zamani',42,1,1032,'c2',09010000705);
+INSERT INTO teacher (teacher_name ,teacher-id,language_id,course_id,level,phone) VALUES('zahra ghanbari',43,4,4022,'b2',09169200044);
+INSERT INTO teacher (teacher_name,teacher-id,language_id,course_id,level,phone) VALUES('elham sotudeh',44,5,5021,'b1',09301203374);
+INSERT INTO teacher (teacher_name,teacher-id,language_id,course_id,level,phone) VALUES('Mina mahmoodi',45,5,5032,'c2',0900000842);
+INSERT INTO teacher (teacher_name,teacher-id,language_id,course_id,level,phone) VALUES('zahra akhavan',46,3,3031l,'c1',09330000020);
+INSERT INTO teacher (teacher_name,teacher-id,language_id,course_id,level,phone) VALUES('Ali zare',47,3,3022,'a2',09149999661);
+INSERT INTO teacher (teacher_name,teacher-id,language_id,course_id,level,phone) VALUES('morteza cham',48,2,2022,'a2',0914999000769);
+INSERT INTO teacher (teacher_name,teacher-id,language_id,course_id,level,phone) VALUES('Mahsa Saei',49,2,2032,'c2',0912000001);
+INSERT INTO teacher (teacher_name,teacher-id,language_id,course_id,level,phone) VALUES('Ali karimpour',50,4,4022,'b2',0914000060);
+INSERT INTO student (stu_name,language_id,course_id,teacher_id,level,phone) VALUES('Zahra Safdari',1,1031,46,'c1',09140000073);
+INSERT INTO student (stu_name,language_id,course_id,teacher_id,level,phone) VALUES('saba fekri',1,1031,46,'c1',091400000);
+INSERT INTO student (stu_name,language_id,course_id,teacher_id,level,phone) VALUES('Ghazal Amiri',1,1031,46,’c1’,091400100);
+INSERT INTO student (stu_name,language_id,course_id,teacher_id,level,phone) VALUES('Sara taghavi',3,3000,41,'new student',091400200);
+INSERT INTO student (stu_name,language_id,course_id,teacher_id,level,phone) VALUES('Niloofar abi',4,4011,47,'a1',091470000);
+INSERT INTO student (stu_name,language_id,course_id,teacher_id,level,phone) VALUES('mahdi mohammadi',2,2031,50,'c1',091409000);
+INSERT INTO student (stu_name,language_id,course_id,teacher_id,level,phone) VALUES('Amir Shabani',1,1031,46,'c1',091400900);
+INSERT INTO student (stu_name,language_id,course_id,teacher_id,level,phone) VALUES('Sanam taghavi',3,3000,41,'new student',091400250);
+INSERT INTO student (stu_name,language_id,course_id,teacher_id,level,phone) VALUES('Arash Nasiri',5,5022,44,'b2',091400290);
+INSERT INTO class (class_name,course_id,type) VALUES('German-a1',1011,'Hozouri');
+INSERT INTO class (class_name,course_id,type) VALUES('German-a1',1011,'online');
+INSERT INTO class (class_name,course_id,type) VALUES('German-a2',1012,'online');
+INSERT INTO class (class_name,course_id,type) VALUES('German-b1',1021,'Hozouri');
+INSERT INTO class (class_name,course_id,type) VALUES('German-b1',1021,'online');
+INSERT INTO class (class_name,course_id,type) VALUES('German-b2',1022,'Hozouri');
+INSERT INTO class (class_name,course_id,type) VALUES('German-b2',1022,'online');
+INSERT INTO class (class_name,course_id,type) VALUES('German-c1',1031,'Hozouri');
+INSERT INTO class (class_name,course_id,type) VALUES('German-c1',1031,'online');
+INSERT INTO class (class_name,course_id,type) VALUES('German-c2',1032,'online');
+INSERT INTO exam (exam_id,course_id,exam_date) VALUES(32,1031,01/05/20);
+INSERT INTO exam (exam_id,course_id,exam_date) VALUES(33,2022,01/05/20);
+INSERT INTO exam (exam_id,course_id,exam_date) VALUES(36,5031,01/06/02);
+INSERT INTO exam (exam_id,course_id,exam_date) VALUES(40,4022,01/06/02);
+INSERT INTO Level_exam (levelexam_id,language_id,levelexam_name) VALUES(112,1,’German_level_a1’);
+INSERT INTO Level_exam (levelexam_id,language_id,levelexam_name) VALUES(201,2,’English_level_c2’);
+INSERT INTO Level_exam (levelexam_id,language_id,levelexam_name) VALUES(211,5,’Italian_level_a1’);
+INSERT INTO Level_exam (levelexam_id,language_id,levelexam_name) VALUES(140,3,’Turkish_level_b2’);
+INSERT INTO Level_exam (levelexam_id,language_id,levelexam_name) VALUES(123,4,’French-level-c1’);
+SELECT teacher.teacher_name
+FROM teacher
+WHERE teacher.level=’c1’;
+SELECT student.stu_name
+FROM student, teacher
+WHERE student.teacher_id=teacher.teacher_id
+AND teacher.teacher_name=’zahra akhavan’;
+SELECT class.class_name
+FROM class
+WHERE class.type=’online’;
+SELECT teacher.teacher_name
+FROM teacher, language
+WHERE teacher.lang_id=language.lang_id
+AND language.lang_name=’Turkish’;
+SELECT student.stu_name
+FROM student, language
+WHERE student.lang_id=language,lang_id
+AND language,lang_name=’English’;
+SELECT student.stu_name
+FROM student, course
+WHERE student.course_id=course.course_id
+AND course.course_name=’German_a2’;
+SELECT course.course_name
+FROM course
+WHERE course.capacity<=40;
